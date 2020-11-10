@@ -45,7 +45,9 @@ namespace IdentityServer
                     ClientSecrets = { new Secret("secret".Sha256()) },
 
                     AllowedGrantTypes = GrantTypes.Code,
-                    
+
+                    RequireConsent = true,
+
                     // where to redirect to after login
                     RedirectUris = { "https://localhost:5002/signin-oidc" },
 
@@ -58,6 +60,24 @@ namespace IdentityServer
                         IdentityServerConstants.StandardScopes.Profile,
                         "api1"
                     }
+                },
+
+                new Client
+                {
+                    ClientId = "mvc.owin",
+                    ClientName = "MVC Client",
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    ClientSecrets = {new Secret("secret".Sha256())},
+                    RedirectUris = {"https://localhost:44343/"},
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "api1"
+                    },
+
+                    // for legacy MVC with .net 4.7
+                    RequirePkce = false
                 }
             };
     }
